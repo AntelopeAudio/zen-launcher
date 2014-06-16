@@ -11,11 +11,19 @@ from zen_launcher import runner
 
 # XXX y: Translate?
 TEXT_CHECKING = 'Checking for new updates'
+TEXT_NO_CONNECTION = 'Please check your Internet connection and try again'
 TEXT_DOWNLOADING_FMT = 'Downloading control panel v{}'
 TEXT_INSTALLING = 'Installing update'
 TEXT_LAUNCHING_FMT = 'Launching control panel v{}'
 
 window = None
+
+
+def animate_progress(duration):
+    window.set_progress(0)
+    for i in range(11):
+        window.set_progress(10 * i)
+        time.sleep(duration / 10)
 
 
 def get_archive_type(url):
@@ -29,13 +37,14 @@ def get_archive_type(url):
 def run_latest():
     ver = runner.get_latest_panel_version()
     if not ver:
-        raise ValueError
+        window.set_text(TEXT_NO_CONNECTION, color='red')
+    else:
+        window.set_text(TEXT_LAUNCHING_FMT.format(ver))
+        # animate_progress(0.5)
+        time.sleep(0.5)
 
-    window.set_text(TEXT_LAUNCHING_FMT.format(ver))
-    time.sleep(0.5)
-
-    app.destroy()
-    runner.run_version(ver)
+        app.destroy()
+        runner.run_version(ver)
 
 
 def install(updates):
@@ -43,10 +52,12 @@ def install(updates):
     latest = updates[0]
     url = latest['url']
     window.set_text(TEXT_DOWNLOADING_FMT.format(latest['version']))
+    window.set_progress(0)
     f = download.tempdownload(latest['url'], window.set_progress)
 
     # 2. Extract
     window.set_text(TEXT_INSTALLING)
+    window.set_progress(100)
     archive_type = get_archive_type(url)
     newdir = runner.get_panel_dir(latest['version'])
     download.extract(f.name, newdir, archive_type)
@@ -60,9 +71,8 @@ def install(updates):
 
 def background():
     window.set_text(TEXT_CHECKING)
-
     # We're nice, so we give the user some time to read the message ;)
-    time.sleep(0.5)
+    animate_progress(0.5)
 
     ver = runner.get_latest_panel_version() or '1.00'
     # There's a trick: the first official version we're releasing is
