@@ -35,6 +35,7 @@ class Application(tk.Canvas):
     def __init__(self, master):
         super(Application, self).__init__(master,
                                           bg='black',
+                                          highlightthickness=0,
                                           width=800,
                                           height=500)
         self.ref = []           # Holds references to prevent GC
@@ -100,6 +101,7 @@ def destroy():
 def create_window():
     global root
     root = tk.Tk()
+    # root.overrideredirect(1)
     root.protocol('WM_DELETE_WINDOW', destroy)
 
     def process():
@@ -120,7 +122,7 @@ def create_window():
     # Enqueue initially
     root.after(interval, process)
 
-    # root.wm_resizable(0, 0)
+    root.wm_resizable(0, 0)
     return Application(master=root)
 
 
