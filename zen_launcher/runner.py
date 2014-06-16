@@ -57,5 +57,7 @@ def run_version(ver):
         print('Starting {} for Windows'.format(d))
     elif sys.platform.startswith('darwin'):
         print('Starting {} for Darwin'.format(d))
+        import subprocess
+        subprocess.call('cd "{}" && open ./*.app'.format(d), shell=True)
     else:
         print('Starting {} for GNU'.format(d))
