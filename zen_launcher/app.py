@@ -69,15 +69,15 @@ class Application(tk.Canvas):
         # Text
         self.text = self.create_text(
             (400, 270),
-            fill='#00b5ff',
+            # fill='#00b5ff',
             justify=tk.CENTER,
             text='',
             font=(None, 9, 'bold')
         )
 
     @ui_method
-    def set_text(self, s):
-        self.itemconfig(self.text, text=s.upper())
+    def set_text(self, s, color='#00b5ff'):
+        self.itemconfig(self.text, fill=color, text=s.upper())
 
     @ui_method
     def set_progress(self, p):
