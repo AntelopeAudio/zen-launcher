@@ -30,15 +30,6 @@ def ui_method(f):
     return d
 
 
-# XXX y: Translate?
-TEXT_CHECKING = 'Checking for new updates'
-TEXT_DOWNLOADING = 'Downloading control panel'
-TEXT_DOWNLOADING_FMT = 'Downloading control panel v{}'
-TEXT_INSTALLING = 'Installing update'
-TEXT_LAUNCHING = 'Launching control panel'
-TEXT_LAUNCHING_FMT = 'Launching control panel v{}'
-
-
 class Application(tk.Canvas):
 
     def __init__(self, master):
@@ -53,7 +44,7 @@ class Application(tk.Canvas):
         self.create_ui()
 
         # Initial state
-        self.set_text(TEXT_CHECKING)
+        self.set_text('')
         self.set_progress(0)
 
         self.pack()

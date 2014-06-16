@@ -9,6 +9,12 @@ from zen_launcher import download
 from zen_launcher import runner
 
 
+# XXX y: Translate?
+TEXT_CHECKING = 'Checking for new updates'
+TEXT_DOWNLOADING_FMT = 'Downloading control panel v{}'
+TEXT_INSTALLING = 'Installing update'
+TEXT_LAUNCHING_FMT = 'Launching control panel v{}'
+
 window = None
 
 
@@ -25,7 +31,7 @@ def run_latest():
     if not ver:
         raise ValueError
 
-    window.set_text(app.TEXT_LAUNCHING_FMT.format(ver))
+    window.set_text(TEXT_LAUNCHING_FMT.format(ver))
     time.sleep(0.5)
 
     app.destroy()
@@ -36,11 +42,11 @@ def install(updates):
     # 1. Download
     latest = updates[0]
     url = latest['url']
-    window.set_text(app.TEXT_DOWNLOADING_FMT.format(latest['version']))
+    window.set_text(TEXT_DOWNLOADING_FMT.format(latest['version']))
     f = download.tempdownload(latest['url'], window.set_progress)
 
     # 2. Extract
-    window.set_text(app.TEXT_INSTALLING)
+    window.set_text(TEXT_INSTALLING)
     archive_type = get_archive_type(url)
     newdir = runner.get_panel_dir(latest['version'])
     download.extract(f.name, newdir, archive_type)
@@ -53,7 +59,7 @@ def install(updates):
 
 
 def background():
-    window.set_text(app.TEXT_CHECKING)
+    window.set_text(TEXT_CHECKING)
 
     # We're nice, so we give the user some time to read the message ;)
     time.sleep(0.5)
