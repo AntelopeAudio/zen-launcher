@@ -8,7 +8,6 @@ def get_updates(ver):
     platform = 'windows' if sys.platform.startswith('win') else \
                'mac' if sys.platform.startswith('darwin') else\
                'gnu'
-    platform = 'mac'
     url = 'http://my.antelopeaudio.com/api/downloads/zenstudio/control_panel/'\
           '{}/{}/'.format(platform, ver)
     try:

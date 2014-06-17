@@ -1,4 +1,5 @@
 import functools
+import os
 import pkg_resources
 import queue
 import threading
@@ -53,7 +54,8 @@ class Application(tk.Canvas):
     def create_ui(self):
         # Progress bar
         pbar_file = pkg_resources.resource_filename(
-            'zen_launcher_resources', 'images/progress_bar.png'
+            'zen_launcher_resources',
+            os.path.join('images', 'progress_bar.png')
         )
         pbar_image = tk.PhotoImage(file=pbar_file)
         self.ref.append(pbar_image)
@@ -61,7 +63,8 @@ class Application(tk.Canvas):
 
         # Image
         background_file = pkg_resources.resource_filename(
-            'zen_launcher_resources', 'images/background.png'
+            'zen_launcher_resources',
+            os.path.join('images', 'background.png')
         )
         background_image = tk.PhotoImage(file=background_file)
         self.ref.append(background_image)
@@ -70,7 +73,6 @@ class Application(tk.Canvas):
         # Text
         self.text = self.create_text(
             (400, 270),
-            # fill='#00b5ff',
             justify=tk.CENTER,
             text='',
             font=(None, 9, 'bold')
@@ -94,7 +96,8 @@ def destroy():
     global destroyed
     destroyed = True
 
-    # Wait INTERVAL so
+    # Wait INTERVAL so we make sure no new processor tasks will be
+    # enqueued for execution after destroy()
     root.after(interval, root.destroy)
 
 
@@ -103,11 +106,11 @@ def create_window():
     root = tk.Tk()
     # root.overrideredirect(1)
     root.protocol('WM_DELETE_WINDOW', destroy)
+    root.wm_resizable(0, 0)     # Window should not be resizable
 
     def process():
         if destroyed:
             return
-
         while 1:
             try:
                 f, args, kwargs = tasks.get_nowait()
@@ -115,14 +118,14 @@ def create_window():
                 break
             else:
                 f(*args, **kwargs)
-
         # Enqueue again
         root.after(interval, process)
+    # /process()
 
-    # Enqueue initially
+    # Enqueue process() initially
     root.after(interval, process)
 
-    root.wm_resizable(0, 0)
+    # Create and return main app window
     return Application(master=root)
 
 
