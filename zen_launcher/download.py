@@ -26,11 +26,14 @@ def tempdownload(url, on_progress=None):
             on_progress and on_progress(
                 int(min(100, max(0, 100 * i * size / length)))
             )
+
+
+        f.seek(0)
         return f
 
 
-def extract(fn, where, archive_type):
-    """ARCHIVE_TYPE can either be 'zip' or 'targz'.
+def extract(f, where, archive_type):
+    """ARCHIVE_TYPE can either be 'tar.bz', 'tar.gz' or 'zip'.
 
     """
     if not os.path.exists(where):
@@ -38,10 +41,10 @@ def extract(fn, where, archive_type):
 
     # print('Extracting {} to {}'.format(fn, where))
     if archive_type == 'zip':
-        with zipfile.ZipFile(fn) as f:
-            f.extractall(where)
+        with zipfile.ZipFile(f) as zf:
+            zf.extractall(where)
     elif archive_type in ('tar.bz', 'tar.gz'):
-        with tarfile.open(fn) as f:
-            f.extractall(where)
+        with tarfile.open(f) as tar:
+            tar.extractall(where)
     else:
         raise ValueError

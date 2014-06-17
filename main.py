@@ -27,10 +27,12 @@ def animate_progress(duration):
 
 
 def get_archive_type(url):
-    if url.endswith('.zip'):
-        return 'zip'
-    elif url.endswith('.tar.bz'):
+    if url.endswith('.tar.bz'):
         return 'tar.bz'
+    elif url.endswith('.tar.gz'):
+        return 'tar.gz'
+    elif url.endswith('.zip'):
+        return 'zip'
     raise ValueError
 
 
@@ -60,7 +62,12 @@ def install(updates):
     window.set_progress(100)
     archive_type = get_archive_type(url)
     newdir = runner.get_panel_dir(latest['version'])
-    download.extract(f.name, newdir, archive_type)
+
+    # Fucking Windows doesn't allow by default multiple processes to
+    # work with one and the same file, so we need to f.seek to 0 and
+    # work with this object as readable file to extract contents from.
+    f.seek(0)
+    download.extract(f, newdir, archive_type)
 
     # 3. Clean up and run
     latest = runner.get_latest_panel_dir()
