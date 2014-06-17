@@ -1,5 +1,6 @@
 import os
 import re
+import subprocess
 import sys
 
 
@@ -53,11 +54,10 @@ def run_version(ver):
     if not os.path.exists(d):
         raise ValueError
     if sys.platform.startswith('win'):
-        # START FOR WINDOWS
-        print('Starting {} for Windows'.format(d))
+        # print('Starting {} for Windows'.format(d))
+        subprocess.call('cd "{}" && ZenStudio.exe'.format(d), shell=True)
     elif sys.platform.startswith('darwin'):
         print('Starting {} for Darwin'.format(d))
-        import subprocess
         subprocess.call('cd "{}" && open ./*.app'.format(d), shell=True)
     else:
         print('Starting {} for GNU'.format(d))
