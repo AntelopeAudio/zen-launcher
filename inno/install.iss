@@ -1,6 +1,6 @@
 [Setup]
 #define NAME "ZenStudio Control Panel"
-#define VERSION GetFileVersion("../build/zen_launcher.exe")
+#define VERSION GetFileVersion("../build_win/zen_launcher.exe")
 ; #define DEBUG
 
 AppId="AntelopeAudioZenStudioCPLauncher"
@@ -15,7 +15,7 @@ SetupIconFile="setup.ico"
 SolidCompression=yes
 VersionInfoVersion={#VERSION}
 WizardImageFile="wizard.bmp"
-WizardSmallImageFile="wizard-small.bmp"
+; WizardSmallImageFile="wizard-small.bmp"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
