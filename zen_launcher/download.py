@@ -43,8 +43,10 @@ def extract(f, where, archive_type):
     if archive_type == 'zip':
         with zipfile.ZipFile(f) as zf:
             zf.extractall(where)
+
     elif archive_type in ('tar.bz', 'tar.gz'):
-        with tarfile.open(f) as tar:
-            tar.extractall(where)
+        with tarfile.open(f.name) as tf:
+            tf.extractall(where)
+
     else:
         raise ValueError

@@ -1,5 +1,6 @@
 import os
 import re
+import shutil
 import subprocess
 import sys
 
@@ -57,7 +58,11 @@ def run_version(ver):
         # print('Starting {} for Windows'.format(d))
         subprocess.call('cd "{}" && ZenStudio.exe'.format(d), shell=True)
     elif sys.platform.startswith('darwin'):
-        print('Starting {} for Darwin'.format(d))
-        subprocess.call('cd "{}" && open ./*.app'.format(d), shell=True)
+        ret = subprocess.call('cd "{}" && open ./*.app'.format(d), shell=True)
+        if ret != 0:
+            # In case of error, remove the CP directory.  This way the
+            # next run will trigger the download process anew.  Not the
+            # smartest thing, but the easiest. :)
+            shutil.rmtree(d)
     else:
         print('Starting {} for GNU'.format(d))
