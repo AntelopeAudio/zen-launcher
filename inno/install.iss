@@ -23,7 +23,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 #ifndef DEBUG
-Source: "..\build\*"; DestDir: "{app}"; Flags: "ignoreversion recursesubdirs"
+Source: "..\build_win\*"; DestDir: "{app}"; Flags: "recursesubdirs"
 #endif
 
 [Icons]
