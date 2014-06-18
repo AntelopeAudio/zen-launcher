@@ -1,11 +1,11 @@
 [Setup]
-#define NAME "ZenStudio Control Panel"
+#define NAME "ZenStudio Control Panel Launcher"
 #define VERSION GetFileVersion("../build_win/zen_launcher.exe")
 ; #define DEBUG
 
 AppId="AntelopeAudioZenStudioCPLauncher"
 AppName={#NAME}
-AppPublisher="Antelope Audio"
+AppPublisher="AntelopeAudio"
 AppVersion={#VERSION}
 Compression=lzma
 DefaultDirName={pf}\{#NAME}

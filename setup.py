@@ -30,6 +30,7 @@ kwargs = {
 
 # Platform specific options
 if sys.platform.startswith('win'):
+    options['build_exe']['build_exe'] = 'build_win'
     kwargs['base'] = 'Win32GUI'
     kwargs['targetName'] += '.exe'
 
