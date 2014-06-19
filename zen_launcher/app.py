@@ -104,6 +104,8 @@ def destroy():
 def create_window():
     global root
     root = tk.Tk()
+    root.title('ZenStudio Control Panel Launcher')
+
     # root.overrideredirect(1)
     root.protocol('WM_DELETE_WINDOW', destroy)
     root.wm_resizable(0, 0)     # Window should not be resizable
