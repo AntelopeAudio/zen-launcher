@@ -1,6 +1,6 @@
 [Setup]
 #define NAME "ZenStudio Control Panel Launcher"
-#define VERSION {%ZEN_LAUNCHER_VERSION|"1.0"}
+#define VERSION GetEnv("ZEN_LAUNCHER_VERSION")
 ; #define DEBUG
 
 AppId="AntelopeAudioZenStudioCPLauncher"
