@@ -8,7 +8,7 @@ from cx_Freeze import setup, Executable
 
 
 BASE_DIR = os.path.realpath(os.path.dirname(__file__))
-VERSION = '1.0.{}'.format(os.environ.get('BUILD_NUMBER', 'dev'))
+VERSION = os.environ.get('ZEN_LAUNCHER_VERSION', '1.0')
 
 options = {
     'build_exe': {
