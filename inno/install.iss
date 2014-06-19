@@ -1,5 +1,6 @@
 [Setup]
-#define NAME "ZenStudioControlPanel"
+#define NAME "ZenStudio Control Panel"
+#define DIR "ZenStudioControlPanel"
 #define VERSION GetEnv("ZEN_LAUNCHER_VERSION")
 ; #define DEBUG
 
@@ -8,7 +9,7 @@ AppName={#NAME}
 AppPublisher="AntelopeAudio"
 AppVersion={#VERSION}
 Compression=lzma
-DefaultDirName={pf}\{#NAME}
+DefaultDirName={pf}\{#DIR}
 DefaultGroupName={#NAME}
 OutputBaseFilename=ZenStudio_{#VERSION}
 SetupIconFile="setup.ico"
