@@ -1,5 +1,5 @@
 [Setup]
-#define NAME "ZenStudio Control Panel Launcher"
+#define NAME "ZenStudioControlPanel"
 #define VERSION GetEnv("ZEN_LAUNCHER_VERSION")
 ; #define DEBUG
 
