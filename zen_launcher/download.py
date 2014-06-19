@@ -19,14 +19,17 @@ def tempdownload(url, on_progress=None):
         length = int(resp.headers['Content-Length'])
         size = 128 * 1024
         for i in itertools.count(start=1):
-            chunk = resp.read(size)
-            if not chunk:
-                break
-            f.write(chunk)
-            on_progress and on_progress(
-                int(min(100, max(0, 100 * i * size / length)))
-            )
-
+            try:
+                chunk = resp.read(size)
+            except (ConnectionAbortedError, ConnectionResetError):
+                f.close()
+                return None
+            else:
+                if not chunk:
+                    break
+                f.write(chunk)
+                progress = int(min(100, max(0, 100 * i * size / length)))
+                on_progress and on_progress(progress)
 
         f.seek(0)
         return f

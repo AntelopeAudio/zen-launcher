@@ -39,10 +39,12 @@ def get_archive_type(url):
 def run_latest():
     ver = runner.get_latest_panel_version()
     if not ver:
+        # Not the wisest thing to show, but we assume the only possible
+        # reason to get here without a valid control panel already
+        # installed is a connectivity issue
         window.set_text(TEXT_NO_CONNECTION, color='red')
     else:
         window.set_text(TEXT_LAUNCHING_FMT.format(ver))
-        # animate_progress(0.5)
         time.sleep(0.5)
 
         app.destroy()
@@ -56,6 +58,11 @@ def install(updates):
     window.set_text(TEXT_DOWNLOADING_FMT.format(latest['version']))
     window.set_progress(0)
     f = download.tempdownload(latest['url'], window.set_progress)
+
+    if f is None:
+        # Error durring download
+        window.set_text(TEXT_NO_CONNECTION, color='red')
+        return
 
     # 2. Extract
     window.set_text(TEXT_INSTALLING)
